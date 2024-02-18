@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<Authors>paoldev</Authors>
+    <Copyright>(C) 2024</Copyright>
+    <PackageProjectUrl>https://github.com/paoldev/PWAHelper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/paoldev/PWAHelper.git</RepositoryUrl>
+    <Description>Helper tool to create PWA manifest file and icons.</Description>
+    <Title>PWA Helper</Title>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>pwa;helper;tool</PackageTags>
+    <Product>PWA Helper</Product>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+    <_Parameter1>CustomTitle</_Parameter1>
+    <_Parameter2>$(Title)</_Parameter2>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+    <_Parameter1>ProjectUrl</_Parameter1>
+    <_Parameter2>$(PackageProjectUrl)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+  
+</Project>
