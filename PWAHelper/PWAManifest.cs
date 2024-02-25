@@ -229,7 +229,7 @@ namespace PWAHelper
         {
             foreach (string resolution in IconResolutions)
             {
-                var iconName = Path.Combine("icons", $"icon-{resolution}.png").Replace("\\", "/");
+                var iconName = Path.Combine(".\\icons", $"icon-{resolution}.png").Replace("\\", "/");
                 icons.Add(new PWAIcon { src = iconName, sizes = resolution, type = "image/png" });
             }
         }
