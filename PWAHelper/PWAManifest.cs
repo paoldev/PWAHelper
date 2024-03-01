@@ -48,7 +48,6 @@ namespace PWAHelper
         Rtl
     };
 
-    //TODO: manage permutations when loading "monochrome any" and other similar strings from file.
     [TypeConverter(typeof(PWAEnumConverter))]
     [JsonNamingPolicyEnum(Policy = "SpaceCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWAImagePurpose>))]
@@ -60,7 +59,25 @@ namespace PWAHelper
         AnyMonochrome,
         AnyMaskable,
         MonochromeMaskable,
-        AnyMonochromeMaskable
+        AnyMonochromeMaskable,
+
+        //Hidden values, used to load additional enum permutations from manifest files.
+        [Browsable(false)]
+        MonochromeAny = AnyMonochrome,
+        [Browsable(false)]
+        MaskableAny = AnyMaskable,
+        [Browsable(false)]
+        MaskableMonochrome = MonochromeMaskable,
+        [Browsable(false)]
+        AnyMaskableMonochrome = AnyMonochromeMaskable,
+        [Browsable(false)]
+        MonochromeAnyMaskable = AnyMonochromeMaskable,
+        [Browsable(false)]
+        MonochromeMaskableAny = AnyMonochromeMaskable,
+        [Browsable(false)]
+        MaskableAnyMonochrome = AnyMonochromeMaskable,
+        [Browsable(false)]
+        MaskableMonochromeAny = AnyMonochromeMaskable
     };
 
     internal class PWAIcon
