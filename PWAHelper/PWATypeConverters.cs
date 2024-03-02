@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Drawing.Design;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Windows.Forms.Design;
 
 namespace PWAHelper
 {
@@ -20,6 +22,10 @@ namespace PWAHelper
         public static JsonNamingPolicy SpaceCaseUpper { get; } = new MyJsonNamingPolicy(false);
 
 
+        //Change the separator char in the given string, used by EnumFlags serializers.
+        public static string? ChangeStringSeparator(string? s, char sourceSeparator, char destSeparator) => s?.Trim().
+            Split(sourceSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Aggregate((n, x) => n + destSeparator + x) ?? s;
+
         //Convert a string according to the passed JsonNamingPolicy
         public static string ConvertString(JsonNamingPolicy? namingPolicy, string s) => namingPolicy?.ConvertName(s) ?? s;
 
@@ -34,15 +40,16 @@ namespace PWAHelper
 
             if (namingPolicy != null)
             {
-                if (s.Contains(','))    //Flags?
+                const char s_defaultStringSeparator = ',';
+                if (s.Contains(s_defaultStringSeparator))    //Flags?
                 {
                     if (!enumType.IsDefined(typeof(FlagsAttribute), false))
                     {
                         throw new ArgumentException(enumType.Name, nameof(enumType));
                     }
 
-                    s = s.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).
-                        Select(x => GetUnderlyingEnumStringInternal(enumType, namingPolicy, x)).Aggregate((s, x) => (s + ", " + x));
+                    s = s.Split(s_defaultStringSeparator, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).
+                        Select(x => GetUnderlyingEnumStringInternal(enumType, namingPolicy, x)).Aggregate((n, x) => n + s_defaultStringSeparator + " " + x);
                 }
                 else
                 {
@@ -169,6 +176,107 @@ namespace PWAHelper
                 }
             }
             return base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
+
+    // Enum Flags: use spaces in place of commas in PropertyGrid editor.
+    internal partial class PWASpacedEnumFlagsEditorConverter(Type type) : PWAEnumEditorConverter(type)
+    {
+        public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destType)
+        {
+            object? result = base.ConvertTo(context, culture, value, destType);
+
+            if (result is string s)
+            {
+                return MyJsonNamingPolicy.ChangeStringSeparator(s, ',', ' ');
+            }
+
+            return result;
+        }
+
+        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
+        {
+            if (value is string s)
+            {
+                value = MyJsonNamingPolicy.ChangeStringSeparator(s, ' ', ',')!;
+            }
+
+            return base.ConvertFrom(context, culture, value);
+        }
+    }
+
+    // Enum Flags: use spaces in place of commas when (de)serializing json files.
+    internal class PWASpacedEnumFlagsJsonConverter<T> : JsonConverter<T> where T : Enum
+    {
+        private readonly JsonNamingPolicy? _namingPolicy = JsonNamingPolicyEnumAttribute.FindJsonNamingPolicy(typeof(T));
+
+        public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var s = MyJsonNamingPolicy.ChangeStringSeparator(reader.GetString(), ' ', ',');
+            if (s == null)
+            {
+                return default;
+            }
+
+            return (T)Enum.Parse(typeof(T), MyJsonNamingPolicy.GetUnderlyingEnumString(typeof(T), _namingPolicy, s)!, true);
+        }
+
+        public override void Write(Utf8JsonWriter writer, T enumValue, JsonSerializerOptions options) => 
+            writer.WriteStringValue(MyJsonNamingPolicy.ChangeStringSeparator(MyJsonNamingPolicy.ConvertString(_namingPolicy, enumValue.ToString()), ',', ' '));
+    }
+
+    // Enum Flags: show checkboxes on the left side of enum entries when editing Enum Flags fields in PropertyGrid.
+    internal class PWAEnumFlagsEditorUI(Type type) : UITypeEditor
+    {
+        private class PWACheckedListBoxItem(string item1, long item2) : Tuple<string, long>(item1, item2)
+        {
+            public override string ToString() => Item1.ToString();
+        }
+
+        private readonly Type _enumType = type;
+        private readonly JsonNamingPolicy? _namingPolicy = JsonNamingPolicyEnumAttribute.FindJsonNamingPolicy(type);
+        private readonly CheckedListBox _checkedListBox = new();
+
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext? context) => UITypeEditorEditStyle.DropDown;
+
+        public override object? EditValue(ITypeDescriptorContext? context, IServiceProvider provider, object? value)
+        {
+            if (context?.Instance != null && provider != null)
+            {
+                if (provider.GetService(typeof(IWindowsFormsEditorService)) is IWindowsFormsEditorService service)
+                {
+                    bool isUnderlyingTypeUInt64 = Enum.GetUnderlyingType(_enumType) == typeof(ulong);
+
+                    long flagsValue = isUnderlyingTypeUInt64 ? unchecked((long)Convert.ToUInt64(value)) : Convert.ToInt64(value);
+
+                    _checkedListBox.CheckOnClick = true;
+                    _checkedListBox.Items.Clear();
+                    foreach (string name in Enum.GetNames(_enumType))
+                    {
+                        object enumValue = Enum.Parse(_enumType, name);
+
+                        long itemValue = isUnderlyingTypeUInt64 ? unchecked((long)Convert.ToUInt64(enumValue)) : Convert.ToInt64(enumValue);
+
+                        bool bIsChecked = (flagsValue & itemValue) != 0;
+
+                        PWACheckedListBoxItem item = new(MyJsonNamingPolicy.ConvertString(_namingPolicy, name), itemValue);
+
+                        _checkedListBox.Items.Add(item, bIsChecked);
+                    }
+
+                    service.DropDownControl(_checkedListBox);
+
+                    long result = 0;
+                    foreach (PWACheckedListBoxItem item in _checkedListBox.CheckedItems)
+                    {
+                        result |= item.Item2;
+                    }
+
+                    //At least one flag has to be set; otherwise return the original value.
+                    return (result != 0) ? Enum.ToObject(_enumType, result) : value;
+                }
+            }
+            return null;
         }
     }
 }
