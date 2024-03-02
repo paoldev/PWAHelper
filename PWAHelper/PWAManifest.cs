@@ -48,36 +48,16 @@ namespace PWAHelper
         Rtl
     };
 
-    [TypeConverter(typeof(PWAEnumEditorConverter))]
+    [Editor(typeof(PWAEnumFlagsEditorUI), typeof(System.Drawing.Design.UITypeEditor))]
+    [TypeConverter(typeof(PWASpacedEnumFlagsEditorConverter))]
     [JsonNamingPolicyEnum(Policy = "SpaceCaseLower", AllowIntegerValues = false)]
-    [JsonConverter(typeof(PWAJsonStringEnumConverter<PWAImagePurpose>))]
+    [JsonConverter(typeof(PWASpacedEnumFlagsJsonConverter<PWAImagePurpose>))]
+    [Flags]
     internal enum PWAImagePurpose
     {
-        Any,
-        Monochrome,
-        Maskable,
-        AnyMonochrome,
-        AnyMaskable,
-        MonochromeMaskable,
-        AnyMonochromeMaskable,
-
-        //Hidden values, used to load additional enum permutations from manifest files.
-        [Browsable(false)]
-        MonochromeAny = AnyMonochrome,
-        [Browsable(false)]
-        MaskableAny = AnyMaskable,
-        [Browsable(false)]
-        MaskableMonochrome = MonochromeMaskable,
-        [Browsable(false)]
-        AnyMaskableMonochrome = AnyMonochromeMaskable,
-        [Browsable(false)]
-        MonochromeAnyMaskable = AnyMonochromeMaskable,
-        [Browsable(false)]
-        MonochromeMaskableAny = AnyMonochromeMaskable,
-        [Browsable(false)]
-        MaskableAnyMonochrome = AnyMonochromeMaskable,
-        [Browsable(false)]
-        MaskableMonochromeAny = AnyMonochromeMaskable
+        Any = 1,
+        Monochrome = 2,
+        Maskable = 4
     };
 
     internal class PWAIcon
