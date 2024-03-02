@@ -68,10 +68,10 @@ namespace PWAHelper
         }
     }
 
-    internal class PWAEnumConverter(Type type) : EnumConverter(type)
+    internal class PWAEnumEditorConverter(Type type) : EnumConverter(type)
     {
-        private readonly Type enumType = type;
-        private readonly JsonNamingPolicy? namingPolicy = JsonNamingPolicyEnumAttribute.FindJsonNamingPolicy(type);
+        private readonly Type _enumType = type;
+        private readonly JsonNamingPolicy? _namingPolicy = JsonNamingPolicyEnumAttribute.FindJsonNamingPolicy(type);
 
         public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destType)
         {
@@ -82,10 +82,10 @@ namespace PWAHelper
         {
             if (value != null)
             {
-                string? name = Enum.GetName(enumType, value);
+                string? name = Enum.GetName(_enumType, value);
                 if (name != null)
                 {
-                    return namingPolicy?.ConvertName(name) ?? name;
+                    return _namingPolicy?.ConvertName(name) ?? name;
                 }
             }
             return base.ConvertTo(context, culture, value, destType);
@@ -98,14 +98,14 @@ namespace PWAHelper
 
         public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            if (namingPolicy != null)
+            if (_namingPolicy != null)
             {
-                string[] names = Enum.GetNames(enumType);
+                string[] names = Enum.GetNames(_enumType);
                 foreach (var name in names)
                 {
-                    if (namingPolicy.ConvertName(name) == (string)value)
+                    if (_namingPolicy.ConvertName(name) == (string)value)
                     {
-                        return Enum.Parse(enumType, name);
+                        return Enum.Parse(_enumType, name);
                     }
                 }
             }
@@ -120,7 +120,7 @@ namespace PWAHelper
         public override void Write(Utf8JsonWriter writer, Color colorValue, JsonSerializerOptions options) => writer.WriteStringValue($"#{colorValue.R:X2}{colorValue.G:X2}{colorValue.B:X2}");
     }
 
-    internal class PWAExpandableObjectConverter : TypeConverter // ExpandableObjectConverter
+    internal class PWAExpandableObjectEditorConverter : TypeConverter // ExpandableObjectConverter
     {
         public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destinationType)
         {

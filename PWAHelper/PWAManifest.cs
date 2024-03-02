@@ -12,7 +12,7 @@ using System.Text.Json.Serialization;
 //- https://developer.mozilla.org/en-US/docs/Web/Manifest
 namespace PWAHelper
 {
-    [TypeConverter(typeof(PWAEnumConverter))]
+    [TypeConverter(typeof(PWAEnumEditorConverter))]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWADisplay>))]
     internal enum PWADisplay
@@ -23,7 +23,7 @@ namespace PWAHelper
         Browser
     };
 
-    [TypeConverter(typeof(PWAEnumConverter))]
+    [TypeConverter(typeof(PWAEnumEditorConverter))]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWAOrientation>))]
     internal enum PWAOrientation
@@ -38,7 +38,7 @@ namespace PWAHelper
         PortraitSecondary
     };
 
-    [TypeConverter(typeof(PWAEnumConverter))]
+    [TypeConverter(typeof(PWAEnumEditorConverter))]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWADir>))]
     internal enum PWADir
@@ -48,7 +48,7 @@ namespace PWAHelper
         Rtl
     };
 
-    [TypeConverter(typeof(PWAEnumConverter))]
+    [TypeConverter(typeof(PWAEnumEditorConverter))]
     [JsonNamingPolicyEnum(Policy = "SpaceCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWAImagePurpose>))]
     internal enum PWAImagePurpose
@@ -101,7 +101,7 @@ namespace PWAHelper
         public string short_name { get; set; } = "";    //optional
         public string description { get; set; } = "";//optional
 
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWAIcon> icons { get; set; } = [];//optional
 
         //Override the string shown in PropertyGridEditor "collections" entries
@@ -219,11 +219,11 @@ namespace PWAHelper
         public PWADisplay display { get; set; } = PWADisplay.Browser;
 
 
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWAIcon> icons { get; set; } = [];
 
 
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWAShortcut> shortcuts { get; set; } = [];
 
 #if PWA_EXTRA_PROPERTIES
@@ -253,12 +253,12 @@ namespace PWAHelper
 
         public string ToJson()
         {
-            return JsonSerializer.Serialize(this, DefaultSerializationOptions);
+            return JsonSerializer.Serialize(this, s_defaultSerializationOptions);
         }
 
         public static PWAManifest? FromJson(string json)
         {
-            return JsonSerializer.Deserialize<PWAManifest>(json, DefaultDeserializationOptions);
+            return JsonSerializer.Deserialize<PWAManifest>(json, s_defaultDeserializationOptions);
         }
 
         public static readonly string[] IconResolutions = [
@@ -272,7 +272,7 @@ namespace PWAHelper
                     "512x512"
         ];
 
-        private static readonly JsonSerializerOptions DefaultSerializationOptions = new() { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
-        private static readonly JsonSerializerOptions DefaultDeserializationOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
+        private static readonly JsonSerializerOptions s_defaultSerializationOptions = new() { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
+        private static readonly JsonSerializerOptions s_defaultDeserializationOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
     }
 }
