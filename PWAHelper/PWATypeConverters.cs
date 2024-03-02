@@ -18,6 +18,52 @@ namespace PWAHelper
 
         public static JsonNamingPolicy SpaceCaseLower { get; } = new MyJsonNamingPolicy(true);
         public static JsonNamingPolicy SpaceCaseUpper { get; } = new MyJsonNamingPolicy(false);
+
+
+        //Convert a string according to the passed JsonNamingPolicy
+        public static string ConvertString(JsonNamingPolicy? namingPolicy, string s) => namingPolicy?.ConvertName(s) ?? s;
+
+
+        //Converts a string already converted by JsonNamingPolicy into a new string using the original enum names.
+        public static string? GetUnderlyingEnumString(Type enumType, JsonNamingPolicy? namingPolicy, string s)
+        {
+            if (s == null)
+            {
+                return null;
+            }
+
+            if (namingPolicy != null)
+            {
+                if (s.Contains(','))    //Flags?
+                {
+                    if (!enumType.IsDefined(typeof(FlagsAttribute), false))
+                    {
+                        throw new ArgumentException(enumType.Name, nameof(enumType));
+                    }
+
+                    s = s.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries).
+                        Select(x => GetUnderlyingEnumStringInternal(enumType, namingPolicy, x)).Aggregate((s, x) => (s + ", " + x));
+                }
+                else
+                {
+                    s = GetUnderlyingEnumStringInternal(enumType, namingPolicy, s);
+                }
+            }
+            return s;
+        }
+
+        private static string GetUnderlyingEnumStringInternal(Type enumType, JsonNamingPolicy namingPolicy, string s)
+        {
+            string[] names = Enum.GetNames(enumType);
+            foreach (var name in names)
+            {
+                if (namingPolicy.ConvertName(name) == s)
+                {
+                    return name;
+                }
+            }
+            return s;
+        }
     }
 
 
@@ -73,41 +119,21 @@ namespace PWAHelper
         private readonly Type _enumType = type;
         private readonly JsonNamingPolicy? _namingPolicy = JsonNamingPolicyEnumAttribute.FindJsonNamingPolicy(type);
 
-        public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destType)
-        {
-            return destType == typeof(string);
-        }
-
         public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destType)
         {
-            if (value != null)
+            var result = base.ConvertTo(context, culture, value, destType);
+            if (result is string s)
             {
-                string? name = Enum.GetName(_enumType, value);
-                if (name != null)
-                {
-                    return _namingPolicy?.ConvertName(name) ?? name;
-                }
+                result = MyJsonNamingPolicy.ConvertString(_namingPolicy, s);
             }
-            return base.ConvertTo(context, culture, value, destType);
-        }
-
-        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
-        {
-            return sourceType == typeof(string);
+            return result;
         }
 
         public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            if (_namingPolicy != null)
+            if ((_namingPolicy != null) && (value is string s))
             {
-                string[] names = Enum.GetNames(_enumType);
-                foreach (var name in names)
-                {
-                    if (_namingPolicy.ConvertName(name) == (string)value)
-                    {
-                        return Enum.Parse(_enumType, name);
-                    }
-                }
+                value = MyJsonNamingPolicy.GetUnderlyingEnumString(_enumType, _namingPolicy, s)!;
             }
             return base.ConvertFrom(context, culture, value);
         }
