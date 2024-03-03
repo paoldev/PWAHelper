@@ -284,6 +284,7 @@
             propertyGrid1.PropertySort = PropertySort.NoSort;
             propertyGrid1.Size = new Size(987, 697);
             propertyGrid1.TabIndex = 0;
+            propertyGrid1.ToolbarVisible = false;
             propertyGrid1.DragDrop += OnpropertyGrid1_DragDrop;
             propertyGrid1.DragEnter += OnpropertyGrid1_DragEnter;
             // 
