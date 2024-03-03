@@ -13,6 +13,7 @@ using System.Text.Json.Serialization;
 namespace PWAHelper
 {
     [TypeConverter(typeof(PWAEnumEditorConverter))]
+    [PWAEnumEditorTextEditable(ReadOnly = true)]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWADisplay>))]
     internal enum PWADisplay
@@ -24,6 +25,7 @@ namespace PWAHelper
     };
 
     [TypeConverter(typeof(PWAEnumEditorConverter))]
+    [PWAEnumEditorTextEditable(ReadOnly = true)]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWAOrientation>))]
     internal enum PWAOrientation
@@ -39,6 +41,7 @@ namespace PWAHelper
     };
 
     [TypeConverter(typeof(PWAEnumEditorConverter))]
+    [PWAEnumEditorTextEditable(ReadOnly = true)]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWADir>))]
     internal enum PWADir
@@ -50,6 +53,7 @@ namespace PWAHelper
 
     [Editor(typeof(PWAEnumFlagsEditorUI), typeof(System.Drawing.Design.UITypeEditor))]
     [TypeConverter(typeof(PWASpacedEnumFlagsEditorConverter))]
+    [PWAEnumEditorTextEditable(ReadOnly = true)]
     [JsonNamingPolicyEnum(Policy = "SpaceCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWASpacedEnumFlagsJsonConverter<PWAImagePurpose>))]
     [Flags]
@@ -93,6 +97,7 @@ namespace PWAHelper
 
 #if PWA_EXTRA_PROPERTIES
     [TypeConverter(typeof(PWAEnumEditorConverter))]
+    [PWAEnumEditorTextEditable(ReadOnly = true)]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWADisplayOverride>))]
     internal enum PWADisplayOverride
@@ -105,6 +110,7 @@ namespace PWAHelper
     };
 
     [TypeConverter(typeof(PWAEnumEditorConverter))]
+    [PWAEnumEditorTextEditable(ReadOnly = true)]
     [JsonNamingPolicyEnum(Policy = "SnakeCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWAApplicationPlatform>))]
     internal enum PWAApplicationPlatform

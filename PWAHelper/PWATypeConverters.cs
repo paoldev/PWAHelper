@@ -116,6 +116,25 @@ namespace PWAHelper
         }
     }
 
+    // Attribute to make PropertyGrid Enum text-label read-only.
+    // Don't specify the attribute in order to use the default PropertyGrid Enum behaviour.
+    [AttributeUsage(AttributeTargets.Enum)]
+    internal class PWAEnumEditorTextEditableAttribute : Attribute
+    {
+        public bool ReadOnly { get; set; } = false;
+
+        public static bool? IsReadOnly(Type type)
+        {
+            var customAttributes = (PWAEnumEditorTextEditableAttribute[])type.GetCustomAttributes(typeof(PWAEnumEditorTextEditableAttribute), true);
+            if (customAttributes.Length > 0)
+            {
+                var attribute = customAttributes[0];
+                return attribute.ReadOnly;
+            }
+            return null;
+        }
+    }
+
     // Enum converter for json files.
     internal class PWAJsonStringEnumConverter<T> : JsonStringEnumConverter<T> where T : struct, Enum
     {
@@ -148,6 +167,9 @@ namespace PWAHelper
             }
             return base.ConvertFrom(context, culture, value);
         }
+
+        // Make enum label editable in PropertyGrid.
+        public override bool GetStandardValuesExclusive(ITypeDescriptorContext? context) => PWAEnumEditorTextEditableAttribute.IsReadOnly(_enumType) ?? base.GetStandardValuesExclusive(context);
     }
 
     // Color serializers for json files.
@@ -227,7 +249,7 @@ namespace PWAHelper
             return (T)Enum.Parse(typeof(T), MyJsonNamingPolicy.GetUnderlyingEnumString(typeof(T), _namingPolicy, s)!, true);
         }
 
-        public override void Write(Utf8JsonWriter writer, T enumValue, JsonSerializerOptions options) => 
+        public override void Write(Utf8JsonWriter writer, T enumValue, JsonSerializerOptions options) =>
             writer.WriteStringValue(MyJsonNamingPolicy.ChangeStringSeparator(MyJsonNamingPolicy.ConvertString(_namingPolicy, enumValue.ToString()), ',', ' '));
     }
 
