@@ -92,7 +92,7 @@ namespace PWAHelper
     };
 
 #if PWA_EXTRA_PROPERTIES
-    [TypeConverter(typeof(PWAEnumConverter))]
+    [TypeConverter(typeof(PWAEnumEditorConverter))]
     [JsonNamingPolicyEnum(Policy = "KebabCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWADisplayOverride>))]
     internal enum PWADisplayOverride
@@ -104,7 +104,7 @@ namespace PWAHelper
         WindowControlsOverlay
     };
 
-    [TypeConverter(typeof(PWAEnumConverter))]
+    [TypeConverter(typeof(PWAEnumEditorConverter))]
     [JsonNamingPolicyEnum(Policy = "SnakeCaseLower", AllowIntegerValues = false)]
     [JsonConverter(typeof(PWAJsonStringEnumConverter<PWAApplicationPlatform>))]
     internal enum PWAApplicationPlatform
@@ -161,7 +161,7 @@ namespace PWAHelper
         public string id { get; set; } = "";
         public string min_version { get; set; } = "";
 
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWAApplicationFingerprint> fingerprints { get; set; } = new();
 
         //Override the string shown in PropertyGridEditor "collections" entries
@@ -209,16 +209,16 @@ namespace PWAHelper
 #if PWA_EXTRA_PROPERTIES
         public bool prefer_related_applications { get; set; } = false;
         
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWAApplication> related_applications { get; set; } = [];
 
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWADisplayOverride> display_override { get; set; } = [];
 
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWAScreenshot> screenshots { get; set; } = [];
         
-        [TypeConverter(typeof(PWAExpandableObjectConverter))]
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
         public List<PWAProtocolHandler> protocol_handlers { get; set; } = [];
 #endif  //PWA_EXTRA_PROPERTIES
 
