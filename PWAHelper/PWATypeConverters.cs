@@ -7,6 +7,7 @@ using System.Windows.Forms.Design;
 
 namespace PWAHelper
 {
+    // Additional json naming policies: SpaceCaseLower and SpaceCaseUpper.
     internal class MyJsonNamingPolicy : JsonNamingPolicy
     {
         private readonly bool _lowercase;
@@ -26,7 +27,7 @@ namespace PWAHelper
         public static string? ChangeStringSeparator(string? s, char sourceSeparator, char destSeparator) => s?.Trim().
             Split(sourceSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Aggregate((n, x) => n + destSeparator + x) ?? s;
 
-        //Convert a string according to the passed JsonNamingPolicy
+        //Convert a string according to the passed JsonNamingPolicy.
         public static string ConvertString(JsonNamingPolicy? namingPolicy, string s) => namingPolicy?.ConvertName(s) ?? s;
 
 
@@ -73,6 +74,7 @@ namespace PWAHelper
         }
     }
 
+    // Attribute to serialize enums as strings formatted by JsonNamingPolicy.
 
     [AttributeUsage(AttributeTargets.Enum)]
     internal class JsonNamingPolicyEnumAttribute : Attribute
@@ -114,6 +116,7 @@ namespace PWAHelper
         }
     }
 
+    // Enum converter for json files.
     internal class PWAJsonStringEnumConverter<T> : JsonStringEnumConverter<T> where T : struct, Enum
     {
         public PWAJsonStringEnumConverter() : base(JsonNamingPolicyEnumAttribute.FindJsonNamingPolicy(typeof(T)), JsonNamingPolicyEnumAttribute.FindAllowIntegerValues(typeof(T)))
@@ -121,6 +124,7 @@ namespace PWAHelper
         }
     }
 
+    // PropertyGrid Enum viewer, to show enums as strings formatted by JsonNamingPolicy.
     internal class PWAEnumEditorConverter(Type type) : EnumConverter(type)
     {
         private readonly Type _enumType = type;
@@ -146,6 +150,7 @@ namespace PWAHelper
         }
     }
 
+    // Color serializers for json files.
     internal class PWAColorJsonConverter : JsonConverter<Color>
     {
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => (Color)(new ColorConverter())!.ConvertFrom(reader.GetString()!)!;
@@ -153,6 +158,7 @@ namespace PWAHelper
         public override void Write(Utf8JsonWriter writer, Color colorValue, JsonSerializerOptions options) => writer.WriteStringValue($"#{colorValue.R:X2}{colorValue.G:X2}{colorValue.B:X2}");
     }
 
+    // PropertyGrid Collections title customization.
     internal class PWAExpandableObjectEditorConverter : TypeConverter // ExpandableObjectConverter
     {
         public override object? ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type destinationType)
