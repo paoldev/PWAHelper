@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static PWAHelper.PWADisplayNamePropertyTypeConverterParamsAttribute;
 
 //See
 //- https://w3c.github.io/manifest
@@ -64,34 +65,38 @@ namespace PWAHelper
         Maskable = 4
     };
 
+    [PWADisplayNamePropertyTypeConverterParams("SnakeCaseLower", DisplayNameSource.Name, DisplayNameOverride.No)]
+    [TypeConverter(typeof(PWADisplayNamePropertyTypeConverter))]
     internal class PWAIcon
     {
-        public string src { get; set; } = "";
-        public string sizes { get; set; } = "";
-        public string type { get; set; } = "";
-        public PWAImagePurpose purpose { get; set; } = PWAImagePurpose.Any;
+        public string Src { get; set; } = "";
+        public string Sizes { get; set; } = "";
+        public string Type { get; set; } = "";
+        public PWAImagePurpose Purpose { get; set; } = PWAImagePurpose.Any;
 
         //Override the string shown in PropertyGridEditor "collections" entries
         public override string ToString()
         {
-            return !string.IsNullOrWhiteSpace(src) ? src : "icon";
+            return !string.IsNullOrWhiteSpace(Src) ? Src : "icon";
         }
     };
 
+    [PWADisplayNamePropertyTypeConverterParams("SnakeCaseLower", DisplayNameSource.Name, DisplayNameOverride.No)]
+    [TypeConverter(typeof(PWADisplayNamePropertyTypeConverter))]
     internal class PWAShortcut
     {
-        public string name { get; set; } = "";
-        public string url { get; set; } = "";
-        public string short_name { get; set; } = "";    //optional
-        public string description { get; set; } = "";//optional
+        public string Name { get; set; } = "";
+        public string Url { get; set; } = "";
+        public string ShortName { get; set; } = "";    //optional
+        public string Description { get; set; } = "";//optional
 
         [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWAIcon> icons { get; set; } = [];//optional
+        public List<PWAIcon> Icons { get; set; } = [];//optional
 
         //Override the string shown in PropertyGridEditor "collections" entries
         public override string ToString()
         {
-            return !string.IsNullOrWhiteSpace(name) ? name : "shortcut";
+            return !string.IsNullOrWhiteSpace(Name) ? Name : "shortcut";
         }
     };
 
@@ -121,37 +126,43 @@ namespace PWAHelper
         Windows
     };
 
+    [PWADisplayNamePropertyTypeConverterParams("SnakeCaseLower", DisplayNameSource.Name, DisplayNameOverride.No)]
+    [TypeConverter(typeof(PWADisplayNamePropertyTypeConverter))]
     internal class PWAScreenshot
     {
-        public string src { get; set; } = "";
-        public string sizes { get; set; } = "";
-        public string type { get; set; } = "";
-        public string label { get; set; } = "";
-        public string platform { get; set; } = "";
-        public string form_factor { get; set; } = "";
+        public string Src { get; set; } = "";
+        public string Sizes { get; set; } = "";
+        public string Type { get; set; } = "";
+        public string Label { get; set; } = "";
+        public string Platform { get; set; } = "";
+        public string FormFactor { get; set; } = "";
         //Override the string shown in PropertyGridEditor "collections" entries
         public override string ToString()
         {
-            return !string.IsNullOrWhiteSpace(src) ? src : "screenshot";
+            return !string.IsNullOrWhiteSpace(Src) ? Src : "screenshot";
         }
     };
 
+    [PWADisplayNamePropertyTypeConverterParams("SnakeCaseLower", DisplayNameSource.Name, DisplayNameOverride.No)]
+    [TypeConverter(typeof(PWADisplayNamePropertyTypeConverter))]
     internal class PWAProtocolHandler
     {
-        public string protocol { get; set; } = "";
-        public string url { get; set; } = "";
+        public string Protocol { get; set; } = "";
+        public string Url { get; set; } = "";
 
         //Override the string shown in PropertyGridEditor "collections" entries
         public override string ToString()
         {
-            return !string.IsNullOrWhiteSpace(url) ? url : "protocol handler";
+            return !string.IsNullOrWhiteSpace(Url) ? Url : "protocol handler";
         }
     };
 
+    [PWADisplayNamePropertyTypeConverterParams("SnakeCaseLower", DisplayNameSource.Name, DisplayNameOverride.No)]
+    [TypeConverter(typeof(PWADisplayNamePropertyTypeConverter))]
     internal class PWAApplicationFingerprint
     {
-        public string type { get; set; } = "";
-        public string value { get; set; } = "";
+        public string Type { get; set; } = "";
+        public string Value { get; set; } = "";
 
         //Override the string shown in PropertyGridEditor "collections" entries
         public override string ToString()
@@ -160,72 +171,76 @@ namespace PWAHelper
         }
     }
 
+    [PWADisplayNamePropertyTypeConverterParams("SnakeCaseLower", DisplayNameSource.Name, DisplayNameOverride.No)]
+    [TypeConverter(typeof(PWADisplayNamePropertyTypeConverter))]
     internal class PWAApplication
     {
-        public PWAApplicationPlatform platform { get; set; } = PWAApplicationPlatform.ChromeWebStore;
-        public string url { get; set; } = "";
-        public string id { get; set; } = "";
-        public string min_version { get; set; } = "";
+        public PWAApplicationPlatform Platform { get; set; } = PWAApplicationPlatform.ChromeWebStore;
+        public string Url { get; set; } = "";
+        public string Id { get; set; } = "";
+        public string MinVersion { get; set; } = "";
 
         [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWAApplicationFingerprint> fingerprints { get; set; } = new();
+        public List<PWAApplicationFingerprint> Fingerprints { get; set; } = [];
 
         //Override the string shown in PropertyGridEditor "collections" entries
         public override string ToString()
         {
-            return JsonNamingPolicy.SnakeCaseLower.ConvertName(platform.ToString());
+            return JsonNamingPolicy.SnakeCaseLower.ConvertName(Platform.ToString());
         }
     };
 #endif  //PWA_EXTRA_PROPERTIES
 
+    [PWADisplayNamePropertyTypeConverterParams("SnakeCaseLower", DisplayNameSource.Name, DisplayNameOverride.No)]
+    [TypeConverter(typeof(PWADisplayNamePropertyTypeConverter))]
     internal class PWAManifest
     {
-        public string id { get; set; } = "./index.html";
-        public string name { get; set; } = "";
-        public string short_name { get; set; } = "";
-        public string description { get; set; } = "";   //optional?
-        public string lang { get; set; } = CultureInfo.CurrentCulture.Name;
-        public string start_url { get; set; } = "./index.html";
-        public string scope { get; set; } = "./";
+        public string Id { get; set; } = "./index.html";
+        public string Name { get; set; } = "";
+        public string ShortName { get; set; } = "";
+        public string Description { get; set; } = "";   //optional?
+        public string Lang { get; set; } = CultureInfo.CurrentCulture.Name;
+        public string StartUrl { get; set; } = "./index.html";
+        public string Scope { get; set; } = "./";
 
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        public PWADir dir { get; set; } = PWADir.Auto;
+        public PWADir Dir { get; set; } = PWADir.Auto;
 
 
         [JsonConverter(typeof(PWAColorJsonConverter))]
-        public Color theme_color { get; set; } = Color.White;
+        public Color ThemeColor { get; set; } = Color.White;
 
 
         [JsonConverter(typeof(PWAColorJsonConverter))]
-        public Color background_color { get; set; } = Color.White;
+        public Color BackgroundColor { get; set; } = Color.White;
 
-        public PWAOrientation orientation { get; set; } = PWAOrientation.Any;
+        public PWAOrientation Orientation { get; set; } = PWAOrientation.Any;
 
-        public PWADisplay display { get; set; } = PWADisplay.Browser;
-
-
-        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWAIcon> icons { get; set; } = [];
+        public PWADisplay Display { get; set; } = PWADisplay.Browser;
 
 
         [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWAShortcut> shortcuts { get; set; } = [];
+        public List<PWAIcon> Icons { get; set; } = [];
+
+
+        [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
+        public List<PWAShortcut> Shortcuts { get; set; } = [];
 
 #if PWA_EXTRA_PROPERTIES
-        public bool prefer_related_applications { get; set; } = false;
+        public bool PreferRelatedApplications { get; set; } = false;
         
         [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWAApplication> related_applications { get; set; } = [];
+        public List<PWAApplication> RelatedApplications { get; set; } = [];
 
         [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWADisplayOverride> display_override { get; set; } = [];
+        public List<PWADisplayOverride> DisplayOverride { get; set; } = [];
 
         [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWAScreenshot> screenshots { get; set; } = [];
+        public List<PWAScreenshot> Screenshots { get; set; } = [];
         
         [TypeConverter(typeof(PWAExpandableObjectEditorConverter))]
-        public List<PWAProtocolHandler> protocol_handlers { get; set; } = [];
+        public List<PWAProtocolHandler> ProtocolHandlers { get; set; } = [];
 #endif  //PWA_EXTRA_PROPERTIES
 
         public PWAManifest()
@@ -233,7 +248,7 @@ namespace PWAHelper
             foreach (string resolution in IconResolutions)
             {
                 var iconName = Path.Combine(".\\icons", $"icon-{resolution}.png").Replace("\\", "/");
-                icons.Add(new PWAIcon { src = iconName, sizes = resolution, type = "image/png" });
+                Icons.Add(new PWAIcon { Src = iconName, Sizes = resolution, Type = "image/png" });
             }
         }
 
