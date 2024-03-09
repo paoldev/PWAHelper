@@ -10,4 +10,19 @@ References
 * https://json.schemastore.org/web-manifest
 * https://developer.mozilla.org/en-US/docs/Web/Manifest
 
-This application saves few common manifest attributes, so pay attention when overwriting an already existing manifest file.
+This application saves few common manifest attributes, so pay attention when overwriting an already existing manifest file.  
+Supported properties:
+* **id**
+* **name**
+* **short_name**
+* **description**
+* **lang**
+* **start_url**
+* **scope**
+* **dir**
+* **theme_color**
+* **background_color**
+* **orientation**
+* **display**
+* **icons**
+* **shortcuts**
