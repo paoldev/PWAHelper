@@ -81,17 +81,19 @@
             // 
             treeViewAssets.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             treeViewAssets.CheckBoxes = true;
-            treeViewAssets.Location = new Point(6, 177);
+            treeViewAssets.Location = new Point(4, 106);
+            treeViewAssets.Margin = new Padding(2);
             treeViewAssets.Name = "treeViewAssets";
-            treeViewAssets.Size = new Size(996, 661);
+            treeViewAssets.Size = new Size(695, 393);
             treeViewAssets.TabIndex = 0;
             treeViewAssets.AfterCheck += OntreeViewAssets_AfterCheck;
             // 
             // buttonFolder
             // 
-            buttonFolder.Location = new Point(9, 28);
+            buttonFolder.Location = new Point(6, 17);
+            buttonFolder.Margin = new Padding(2);
             buttonFolder.Name = "buttonFolder";
-            buttonFolder.Size = new Size(172, 34);
+            buttonFolder.Size = new Size(120, 24);
             buttonFolder.TabIndex = 1;
             buttonFolder.Text = "Select folder";
             buttonFolder.UseVisualStyleBackColor = true;
@@ -100,16 +102,18 @@
             // textBoxFolder
             // 
             textBoxFolder.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBoxFolder.Location = new Point(187, 30);
+            textBoxFolder.Location = new Point(131, 18);
+            textBoxFolder.Margin = new Padding(2);
             textBoxFolder.Name = "textBoxFolder";
-            textBoxFolder.Size = new Size(823, 31);
+            textBoxFolder.Size = new Size(535, 23);
             textBoxFolder.TabIndex = 2;
             // 
             // buttonExportAssets
             // 
-            buttonExportAssets.Location = new Point(6, 82);
+            buttonExportAssets.Location = new Point(4, 49);
+            buttonExportAssets.Margin = new Padding(2);
             buttonExportAssets.Name = "buttonExportAssets";
-            buttonExportAssets.Size = new Size(271, 32);
+            buttonExportAssets.Size = new Size(190, 29);
             buttonExportAssets.TabIndex = 3;
             buttonExportAssets.Text = "Generate service-worker-assets.js";
             buttonExportAssets.UseVisualStyleBackColor = true;
@@ -124,35 +128,41 @@
             groupBox1.Controls.Add(buttonExportAssets);
             groupBox1.Dock = DockStyle.Fill;
             groupBox1.Location = new Point(0, 0);
+            groupBox1.Margin = new Padding(2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1008, 858);
+            groupBox1.Padding = new Padding(2);
+            groupBox1.Size = new Size(703, 510);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 133);
+            label3.Location = new Point(8, 80);
+            label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
-            label3.Size = new Size(869, 25);
+            label3.Size = new Size(581, 15);
             label3.TabIndex = 6;
             label3.Text = "Select files for offline caching. Usually service-worker.js and service-worker-assets.js don't need to be cached.";
             // 
             // textBoxServiceWorkerAssetsJs
             // 
-            textBoxServiceWorkerAssetsJs.Location = new Point(83, 30);
+            textBoxServiceWorkerAssetsJs.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxServiceWorkerAssetsJs.Location = new Point(58, 18);
+            textBoxServiceWorkerAssetsJs.Margin = new Padding(2);
             textBoxServiceWorkerAssetsJs.Name = "textBoxServiceWorkerAssetsJs";
             textBoxServiceWorkerAssetsJs.PlaceholderText = "Usually service-worker-assets.js";
-            textBoxServiceWorkerAssetsJs.Size = new Size(919, 31);
+            textBoxServiceWorkerAssetsJs.Size = new Size(644, 23);
             textBoxServiceWorkerAssetsJs.TabIndex = 5;
             textBoxServiceWorkerAssetsJs.Text = "service-worker-assets.js";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 33);
+            label2.Location = new Point(8, 20);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new Size(52, 25);
+            label2.Size = new Size(34, 15);
             label2.TabIndex = 4;
             label2.Text = "js file";
             // 
@@ -164,39 +174,46 @@
             groupBox2.Controls.Add(textBoxImage);
             groupBox2.Controls.Add(buttonLoadImage);
             groupBox2.Dock = DockStyle.Fill;
-            groupBox2.Location = new Point(3, 3);
+            groupBox2.Location = new Point(2, 2);
+            groupBox2.Margin = new Padding(2);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(1002, 852);
+            groupBox2.Padding = new Padding(2);
+            groupBox2.Size = new Size(699, 506);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             // 
             // checkBoxOverwriteIcons
             // 
+            checkBoxOverwriteIcons.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             checkBoxOverwriteIcons.AutoSize = true;
-            checkBoxOverwriteIcons.Location = new Point(687, 272);
+            checkBoxOverwriteIcons.Location = new Point(481, 168);
+            checkBoxOverwriteIcons.Margin = new Padding(2);
             checkBoxOverwriteIcons.Name = "checkBoxOverwriteIcons";
-            checkBoxOverwriteIcons.Size = new Size(160, 29);
+            checkBoxOverwriteIcons.Size = new Size(108, 19);
             checkBoxOverwriteIcons.TabIndex = 4;
             checkBoxOverwriteIcons.Text = "Overwrite icons";
             checkBoxOverwriteIcons.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pictureBox1.BackgroundImageLayout = ImageLayout.None;
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Location = new Point(9, 70);
+            pictureBox1.Location = new Point(6, 42);
+            pictureBox1.Margin = new Padding(2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(468, 461);
+            pictureBox1.Size = new Size(326, 272);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
             // 
             // buttonExportIcons
             // 
-            buttonExportIcons.Location = new Point(533, 268);
+            buttonExportIcons.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonExportIcons.Location = new Point(373, 161);
+            buttonExportIcons.Margin = new Padding(2);
             buttonExportIcons.Name = "buttonExportIcons";
-            buttonExportIcons.Size = new Size(148, 34);
+            buttonExportIcons.Size = new Size(104, 30);
             buttonExportIcons.TabIndex = 2;
             buttonExportIcons.Text = "Export icons";
             buttonExportIcons.UseVisualStyleBackColor = true;
@@ -205,16 +222,18 @@
             // textBoxImage
             // 
             textBoxImage.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            textBoxImage.Location = new Point(160, 32);
+            textBoxImage.Location = new Point(112, 19);
+            textBoxImage.Margin = new Padding(2);
             textBoxImage.Name = "textBoxImage";
-            textBoxImage.Size = new Size(839, 31);
+            textBoxImage.Size = new Size(586, 23);
             textBoxImage.TabIndex = 1;
             // 
             // buttonLoadImage
             // 
-            buttonLoadImage.Location = new Point(9, 30);
+            buttonLoadImage.Location = new Point(6, 18);
+            buttonLoadImage.Margin = new Padding(2);
             buttonLoadImage.Name = "buttonLoadImage";
-            buttonLoadImage.Size = new Size(148, 34);
+            buttonLoadImage.Size = new Size(104, 24);
             buttonLoadImage.TabIndex = 0;
             buttonLoadImage.Text = "Load image";
             buttonLoadImage.UseVisualStyleBackColor = true;
@@ -232,17 +251,20 @@
             groupBox3.Controls.Add(label1);
             groupBox3.Controls.Add(propertyGrid1);
             groupBox3.Dock = DockStyle.Fill;
-            groupBox3.Location = new Point(3, 3);
+            groupBox3.Location = new Point(2, 2);
+            groupBox3.Margin = new Padding(2);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(1002, 852);
+            groupBox3.Padding = new Padding(2);
+            groupBox3.Size = new Size(657, 447);
             groupBox3.TabIndex = 6;
             groupBox3.TabStop = false;
             // 
             // buttonImportManifest
             // 
-            buttonImportManifest.Location = new Point(9, 83);
+            buttonImportManifest.Location = new Point(6, 50);
+            buttonImportManifest.Margin = new Padding(2);
             buttonImportManifest.Name = "buttonImportManifest";
-            buttonImportManifest.Size = new Size(199, 34);
+            buttonImportManifest.Size = new Size(139, 35);
             buttonImportManifest.TabIndex = 5;
             buttonImportManifest.Text = "Import Manifest";
             buttonImportManifest.UseVisualStyleBackColor = true;
@@ -250,9 +272,11 @@
             // 
             // buttonExportManifest
             // 
-            buttonExportManifest.Location = new Point(797, 83);
+            buttonExportManifest.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonExportManifest.Location = new Point(516, 50);
+            buttonExportManifest.Margin = new Padding(2);
             buttonExportManifest.Name = "buttonExportManifest";
-            buttonExportManifest.Size = new Size(199, 34);
+            buttonExportManifest.Size = new Size(139, 35);
             buttonExportManifest.TabIndex = 3;
             buttonExportManifest.Text = "Export Manifest";
             buttonExportManifest.UseVisualStyleBackColor = true;
@@ -260,18 +284,21 @@
             // 
             // textBoxManifest
             // 
-            textBoxManifest.Location = new Point(120, 31);
+            textBoxManifest.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxManifest.Location = new Point(84, 19);
+            textBoxManifest.Margin = new Padding(2);
             textBoxManifest.Name = "textBoxManifest";
             textBoxManifest.PlaceholderText = "Usually manifest.webmanifest or manifest.json";
-            textBoxManifest.Size = new Size(876, 31);
+            textBoxManifest.Size = new Size(572, 23);
             textBoxManifest.TabIndex = 2;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 34);
+            label1.Location = new Point(4, 20);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(108, 25);
+            label1.Size = new Size(72, 15);
             label1.TabIndex = 1;
             label1.Text = "manifest file";
             // 
@@ -279,10 +306,12 @@
             // 
             propertyGrid1.AllowDrop = true;
             propertyGrid1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            propertyGrid1.Location = new Point(9, 149);
+            propertyGrid1.BackColor = SystemColors.Control;
+            propertyGrid1.Location = new Point(6, 89);
+            propertyGrid1.Margin = new Padding(2);
             propertyGrid1.Name = "propertyGrid1";
             propertyGrid1.PropertySort = PropertySort.NoSort;
-            propertyGrid1.Size = new Size(987, 697);
+            propertyGrid1.Size = new Size(647, 354);
             propertyGrid1.TabIndex = 0;
             propertyGrid1.ToolbarVisible = false;
             propertyGrid1.DragDrop += OnpropertyGrid1_DragDrop;
@@ -294,7 +323,8 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1037, 33);
+            menuStrip1.Padding = new Padding(4, 1, 0, 1);
+            menuStrip1.Size = new Size(684, 24);
             menuStrip1.TabIndex = 7;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -302,47 +332,50 @@
             // 
             fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { newToolStripMenuItem, toolStripSeparator1, aboutToolStripMenuItem, toolStripSeparator2, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(54, 29);
+            fileToolStripMenuItem.Size = new Size(37, 22);
             fileToolStripMenuItem.Text = "File";
             // 
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(164, 34);
+            newToolStripMenuItem.Size = new Size(107, 22);
             newToolStripMenuItem.Text = "New";
             newToolStripMenuItem.Click += OnnewToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(161, 6);
+            toolStripSeparator1.Size = new Size(104, 6);
             // 
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(164, 34);
+            aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += OnaboutToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(161, 6);
+            toolStripSeparator2.Size = new Size(104, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(164, 34);
+            exitToolStripMenuItem.Size = new Size(107, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += OnexitToolStripMenuItem_Click;
             // 
             // groupBox4
             // 
+            groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox4.Controls.Add(buttonFolder);
             groupBox4.Controls.Add(textBoxFolder);
-            groupBox4.Location = new Point(9, 36);
+            groupBox4.Location = new Point(6, 22);
+            groupBox4.Margin = new Padding(2);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(1016, 83);
+            groupBox4.Padding = new Padding(2);
+            groupBox4.Size = new Size(669, 50);
             groupBox4.TabIndex = 8;
             groupBox4.TabStop = false;
             groupBox4.Text = "PWA working directory";
@@ -362,19 +395,21 @@
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage3);
-            tabControl1.Location = new Point(9, 125);
+            tabControl1.Location = new Point(6, 75);
+            tabControl1.Margin = new Padding(2);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1016, 896);
+            tabControl1.Size = new Size(669, 479);
             tabControl1.TabIndex = 9;
             // 
             // tabPage1
             // 
             tabPage1.Controls.Add(groupBox3);
-            tabPage1.Location = new Point(4, 34);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Margin = new Padding(2);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1008, 858);
+            tabPage1.Padding = new Padding(2);
+            tabPage1.Size = new Size(661, 451);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "manifest.webmanifest";
             tabPage1.UseVisualStyleBackColor = true;
@@ -382,10 +417,11 @@
             // tabPage2
             // 
             tabPage2.Controls.Add(groupBox2);
-            tabPage2.Location = new Point(4, 34);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Margin = new Padding(2);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1008, 858);
+            tabPage2.Padding = new Padding(2);
+            tabPage2.Size = new Size(703, 510);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "icons";
             tabPage2.UseVisualStyleBackColor = true;
@@ -393,22 +429,25 @@
             // tabPage3
             // 
             tabPage3.Controls.Add(groupBox1);
-            tabPage3.Location = new Point(4, 34);
+            tabPage3.Location = new Point(4, 24);
+            tabPage3.Margin = new Padding(2);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(1008, 858);
+            tabPage3.Size = new Size(703, 510);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "service-worker-assets.js";
             tabPage3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1037, 1033);
+            ClientSize = new Size(684, 561);
             Controls.Add(tabControl1);
             Controls.Add(groupBox4);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(2);
+            MinimumSize = new Size(700, 600);
             Name = "Form1";
             Text = "PWA Helper";
             groupBox1.ResumeLayout(false);

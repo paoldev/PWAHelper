@@ -45,12 +45,11 @@ namespace PWAHelper
 
                 foreach (var node in fileHashes)
                 {
-                    assetsManifest.assets.Add(new ServiceWorkerAsset { url = GetRelativePath((treeViewAssets.Nodes[0].Tag as DirectoryInfo)!.FullName, node.Key), hash = "sha256-" + Convert.ToBase64String(node.Value) });
+                    assetsManifest.Assets.Add(new ServiceWorkerAsset { Url = GetRelativePath((treeViewAssets.Nodes[0].Tag as DirectoryInfo)!.FullName, node.Key), Hash = "sha256-" + Convert.ToBase64String(node.Value) });
                     sha256.TransformBlock(node.Value, 0, node.Value.Length, null, 0);
                 }
                 sha256.TransformFinalBlock([], 0, 0);
-                assetsManifest.version = Convert.ToBase64String(sha256.Hash!)[..8];
-
+                assetsManifest.Version = Convert.ToBase64String(sha256.Hash!)[..8];
             }
 
             var json = JsonSerializer.Serialize(assetsManifest, ServiceWorkerManifest.DefaultSerializationOptions);
@@ -91,7 +90,7 @@ namespace PWAHelper
                 while (stack.Count > 0)
                 {
                     var currentNode = stack.Pop();
-                    var dirInfo = (DirectoryInfo)currentNode.Tag;
+                    var dirInfo = (DirectoryInfo)currentNode.Tag!;
                     foreach (var dir in dirInfo.GetDirectories())
                     {
                         var dirNode = new TreeNode(dir.Name) { Tag = dir };
@@ -459,15 +458,15 @@ namespace PWAHelper
 
     internal class ServiceWorkerAsset
     {
-        public string url { get; set; } = "";
-        public string hash { get; set; } = "";
+        public string Url { get; set; } = string.Empty;
+        public string Hash { get; set; } = string.Empty;
     }
 
     internal class ServiceWorkerManifest
     {
-        public List<ServiceWorkerAsset> assets { get; set; } = [];
-        public string version { get; set; } = "";
+        public List<ServiceWorkerAsset> Assets { get; set; } = [];
+        public string Version { get; set; } = string.Empty;
 
-        public static JsonSerializerOptions DefaultSerializationOptions = new() { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+        public static JsonSerializerOptions DefaultSerializationOptions = new() { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
     }
 }
