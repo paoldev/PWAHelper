@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
 	<Authors>paoldev</Authors>
-    <Copyright>(C) 2024</Copyright>
+    <Copyright>(C) 2024-2025</Copyright>
     <PackageProjectUrl>https://github.com/paoldev/PWAHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/paoldev/PWAHelper.git</RepositoryUrl>
     <Description>Helper tool to create PWA manifest file and icons.</Description>
