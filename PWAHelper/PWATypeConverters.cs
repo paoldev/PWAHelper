@@ -353,7 +353,7 @@ namespace PWAHelper
         private readonly PropertyDescriptor _pd = pd;
         private readonly DisplayNameAttribute _displayNameAttr = new(MyJsonNamingPolicy.ConvertString(namingPolicy, usePropertyName ? pd.Name : pd.DisplayName));
 
-        public override AttributeCollection Attributes => AppendAttributeCollection(new AttributeCollection(_pd.Attributes.OfType<Attribute>().Where(a => a is not DisplayNameAttribute).ToArray()), _displayNameAttr);
+        public override AttributeCollection Attributes => AppendAttributeCollection(new AttributeCollection([.. _pd.Attributes.OfType<Attribute>().Where(a => a is not DisplayNameAttribute)]), _displayNameAttr);
         protected override void FillAttributes(System.Collections.IList attributeList)
         {
             List<object> baseAttributes = [];
