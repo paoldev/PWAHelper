@@ -3,6 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE.txt)
 [![Build and Create Release](https://github.com/paoldev/PWAHelper/actions/workflows/dotnet_create_release.yml/badge.svg)](https://github.com/paoldev/PWAHelper/releases)
 
+PWAHelper (c) 2024-2026 paoldev
+  
 Helper tool to create PWA manifest file and icons.
 
 References
